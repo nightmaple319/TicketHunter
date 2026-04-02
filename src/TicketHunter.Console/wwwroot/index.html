@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicketHunter - 設定</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand fw-bold">TicketHunter</span>
+            <div class="d-flex align-items-center gap-2">
+                <span id="statusBadge" class="badge bg-secondary">閒置</span>
+                <span id="versionLabel" class="text-light small"></span>
+                <button class="btn btn-sm btn-outline-light" onclick="toggleTheme()">主題</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <!-- 控制列 -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="btn-group" role="group">
+                    <button class="btn btn-success" onclick="botAction('run')">啟動</button>
+                    <button class="btn btn-warning" onclick="botAction('pause')">暫停</button>
+                    <button class="btn btn-info" onclick="botAction('resume')">繼續</button>
+                    <button class="btn btn-danger" onclick="botAction('stop')">停止</button>
+                </div>
+                <span id="statusMessage" class="ms-3 text-muted"></span>
+            </div>
+        </div>
+
+        <!-- 分頁 -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#basic">基本設定</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#advanced">進階設定</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#accounts">帳號設定</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#ocr">驗證碼辨識</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#contact">聯絡資訊</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#notifications">通知設定</a></li>
+        </ul>
+
+        <div class="tab-content p-3 border border-top-0 rounded-bottom">
+            <!-- 基本設定 -->
+            <div class="tab-pane active" id="basic">
+                <div class="mb-3">
+                    <label class="form-label">活動網址</label>
+                    <input type="url" class="form-control" id="homepage" placeholder="https://tixcraft.com/activity/...">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label class="form-label">購票張數</label>
+                        <select class="form-select" id="ticketNumber">
+                            <option value="1">1</option>
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h5 class="mt-4">日期自動選擇</h5>
+                <div class="form-check mb-2">
+                    <input type="checkbox" class="form-check-input" id="dateEnable" checked>
+                    <label class="form-check-label">啟用</label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">日期關鍵字 <small class="text-muted">(分號=或, 空格=且)</small></label>
+                    <input type="text" class="form-control" id="dateKeyword" placeholder="例如：12/25;12/26">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">選擇模式</label>
+                    <select class="form-select" id="dateMode">
+                        <option value="from_top">從上而下</option>
+                        <option value="from_bottom">從下而上</option>
+                        <option value="center">中間優先</option>
+                        <option value="random">隨機</option>
+                    </select>
+                </div>
+
+                <h5 class="mt-4">區域自動選擇</h5>
+                <div class="form-check mb-2">
+                    <input type="checkbox" class="form-check-input" id="areaEnable" checked>
+                    <label class="form-check-label">啟用</label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">區域關鍵字</label>
+                    <input type="text" class="form-control" id="areaKeyword" placeholder="例如：VIP;搖滾區">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">排除關鍵字</label>
+                    <input type="text" class="form-control" id="areaExclude" placeholder="例如：輪椅;視線不良">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">選擇模式</label>
+                    <select class="form-select" id="areaMode">
+                        <option value="from_top">從上而下</option>
+                        <option value="from_bottom">從下而上</option>
+                        <option value="center">中間優先</option>
+                        <option value="random">隨機</option>
+                    </select>
+                </div>
+
+                <!-- 快速連結 -->
+                <h5 class="mt-4">快速連結</h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://tixcraft.com')">Tixcraft</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://www.ticketmaster.com')">Ticketmaster</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://www.ticketmaster.sg')">Ticketmaster SG</button>
+                </div>
+            </div>
+
+            <!-- 進階設定 -->
+            <div class="tab-pane" id="advanced">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="headless">
+                            <label class="form-check-label">無頭模式（隱藏瀏覽器視窗）</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="playSound" checked>
+                            <label class="form-check-label">播放音效提示</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="verbose">
+                            <label class="form-check-label">詳細日誌輸出</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="autoSubmitTicket" checked>
+                            <label class="form-check-label">自動按下「確認張數」送出</label>
+                            <div><small class="text-muted">取消勾選後，程式會在填好張數與驗證碼後暫停，等待您手動確認</small></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">自動重新整理間隔（秒）</label>
+                            <input type="number" class="form-control" id="autoReloadInterval" value="3" min="1" max="60">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">最大重試次數</label>
+                            <input type="number" class="form-control" id="maxRetry" value="3" min="1" max="10">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">代理伺服器</label>
+                            <input type="text" class="form-control" id="proxyServer" placeholder="http://host:port">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Web 介面連接埠</label>
+                            <input type="number" class="form-control" id="webPort" value="16888" min="1024" max="65535">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">排程啟動時間（HH:MM:SS）</label>
+                            <input type="text" class="form-control" id="scheduleStart" placeholder="例如：12:00:00">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 帳號設定 -->
+            <div class="tab-pane" id="accounts">
+                <div class="mb-3">
+                    <label class="form-label">Tixcraft 工作階段 ID（TIXUISID）</label>
+                    <input type="text" class="form-control" id="tixcraftSid" placeholder="貼上 TIXUISID Cookie 值">
+                    <small class="text-muted">從瀏覽器開發者工具 > Application > Cookies > tixcraft.com > TIXUISID 取得</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ticketmaster Cookie</label>
+                    <textarea class="form-control" id="ticketmasterCookie" rows="3" placeholder="貼上完整 Cookie 字串"></textarea>
+                    <small class="text-muted">從瀏覽器開發者工具 > Application > Cookies > ticketmaster 網域取得</small>
+                </div>
+            </div>
+
+            <!-- 驗證碼辨識 -->
+            <div class="tab-pane" id="ocr">
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="ocrEnable" checked>
+                    <label class="form-check-label">啟用 OCR 自動辨識</label>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="ocrForceSubmit">
+                    <label class="form-check-label">強制送出（即使 OCR 辨識失敗仍送出）</label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">模型路徑</label>
+                    <input type="text" class="form-control" id="ocrModelPath" value="assets/ocr_models/custom.onnx">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">圖片來源</label>
+                    <select class="form-select" id="ocrImageSource">
+                        <option value="canvas">Canvas</option>
+                        <option value="http">HTTP</option>
+                    </select>
+                </div>
+
+                <!-- OCR 測試 -->
+                <h5 class="mt-4">OCR 測試</h5>
+                <div class="mb-3">
+                    <input type="file" class="form-control" id="ocrTestFile" accept="image/*">
+                </div>
+                <button class="btn btn-primary" onclick="testOcr()">測試辨識</button>
+                <span id="ocrTestResult" class="ms-3"></span>
+
+                <!-- 驗證碼題目 -->
+                <h5 class="mt-4">目前驗證碼題目</h5>
+                <div class="alert alert-info" id="captchaQuestion">尚無驗證碼題目</div>
+                <div class="d-flex gap-2">
+                    <a id="searchGoogle" class="btn btn-outline-secondary btn-sm" target="_blank">Google 搜尋</a>
+                    <a id="searchBing" class="btn btn-outline-secondary btn-sm" target="_blank">Bing 搜尋</a>
+                </div>
+            </div>
+
+            <!-- 聯絡資訊 -->
+            <div class="tab-pane" id="contact">
+                <div class="mb-3">
+                    <label class="form-label">真實姓名</label>
+                    <input type="text" class="form-control" id="realName">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">電話號碼</label>
+                    <input type="tel" class="form-control" id="phone">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">電子信箱</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">信用卡前四碼</label>
+                    <input type="text" class="form-control" id="creditCardPrefix" maxlength="4">
+                </div>
+            </div>
+
+            <!-- 通知設定 -->
+            <div class="tab-pane" id="notifications">
+                <h5>Discord</h5>
+                <div class="mb-3">
+                    <label class="form-label">Webhook 網址</label>
+                    <input type="url" class="form-control" id="discordWebhookUrl" placeholder="https://discord.com/api/webhooks/...">
+                </div>
+                <button class="btn btn-outline-primary btn-sm mb-3" onclick="testDiscord()">測試 Discord</button>
+
+                <h5 class="mt-3">Telegram</h5>
+                <div class="mb-3">
+                    <label class="form-label">Bot Token</label>
+                    <input type="text" class="form-control" id="telegramBotToken">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Chat ID</label>
+                    <input type="text" class="form-control" id="telegramChatId">
+                </div>
+                <button class="btn btn-outline-primary btn-sm mb-3" onclick="testTelegram()">測試 Telegram</button>
+            </div>
+        </div>
+
+        <!-- 儲存/載入按鈕 -->
+        <div class="mt-3 mb-5 d-flex gap-2">
+            <button class="btn btn-primary" onclick="saveConfig()">儲存設定</button>
+            <button class="btn btn-outline-secondary" onclick="loadConfig()">重新載入設定</button>
+            <span id="saveStatus" class="align-self-center text-success"></span>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

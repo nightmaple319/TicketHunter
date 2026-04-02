@@ -1,0 +1,39 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.vs/
+.vs/
+
+# IDE
+.idea/
+*.sln.DotSettings.user
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# NuGet
+*.nupkg
+**/packages/
+nuget.exe
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Config (user-specific)
+settings.json
+
+# Reference project (not part of the C# solution)
+tickets_hunter_v2026.3.10/
+
+# ONNX models (too large for git)
+*.onnx
+
+# Sound assets
+assets/sounds/*.mp3
+assets/sounds/*.wav
