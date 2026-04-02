@@ -7,22 +7,26 @@ public class SoundService
 {
     private readonly ILogger<SoundService> _logger;
 
-    private const string TicketFoundSound = "assets/sounds/ticket_found.mp3";
-    private const string OrderPlacedSound = "assets/sounds/order_placed.mp3";
+    private const string DefaultTicketSound = "assets/sounds/ticket_found.mp3";
+    private const string DefaultOrderSound = "assets/sounds/order_placed.mp3";
 
     public SoundService(ILogger<SoundService> logger)
     {
         _logger = logger;
     }
 
-    public void PlayTicketFound()
+    /// <summary>搶到票時播放音效</summary>
+    public void PlayTicketFound(string? customFile = null)
     {
-        PlayAsync(TicketFoundSound);
+        var path = !string.IsNullOrEmpty(customFile) ? customFile : DefaultTicketSound;
+        PlayAsync(path);
     }
 
-    public void PlayOrderPlaced()
+    /// <summary>訂單完成時播放音效</summary>
+    public void PlayOrderPlaced(string? customFile = null)
     {
-        PlayAsync(OrderPlacedSound);
+        var path = !string.IsNullOrEmpty(customFile) ? customFile : DefaultOrderSound;
+        PlayAsync(path);
     }
 
     private void PlayAsync(string filePath)

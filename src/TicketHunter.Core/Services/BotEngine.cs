@@ -177,8 +177,8 @@ public class BotEngine : IAsyncDisposable
 
                                 if (selected)
                                 {
-                                    if (config.Advanced.PlaySound)
-                                        _soundService.PlayTicketFound();
+                                    if (config.Advanced.PlaySound.Ticket)
+                                        _soundService.PlayTicketFound(config.Advanced.PlaySound.Filename);
                                 }
                                 else
                                 {
@@ -212,8 +212,8 @@ public class BotEngine : IAsyncDisposable
                             {
                                 Status.State = BotState.Paused;
                                 Status.Message = "已填好張數、驗證碼並勾選同意條款，等待手動確認張數";
-                                if (config.Advanced.PlaySound)
-                                    _soundService.PlayTicketFound();
+                                if (config.Advanced.PlaySound.Ticket)
+                                    _soundService.PlayTicketFound(config.Advanced.PlaySound.Filename);
                             }
                             else if (config.Ocr.ForceSubmit || Status.State != BotState.WaitingForCaptcha)
                             {
@@ -256,8 +256,8 @@ public class BotEngine : IAsyncDisposable
                             Status.Message = "Order completed!";
                             _logger.LogInformation("ORDER COMPLETED!");
 
-                            if (config.Advanced.PlaySound)
-                                _soundService.PlayOrderPlaced();
+                            if (config.Advanced.PlaySound.Order)
+                                _soundService.PlayOrderPlaced(config.Advanced.PlaySound.Filename);
 
                             await _notificationService.NotifyAllAsync(config.Advanced,
                                 $"🎉 Order completed!\nURL: {page.Url}");

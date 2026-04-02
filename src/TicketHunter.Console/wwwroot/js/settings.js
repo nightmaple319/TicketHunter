@@ -19,22 +19,64 @@ function applyConfigToUI(c) {
     setChecked('dateEnable', c.date_auto_select?.enable);
     setValue('dateKeyword', c.date_auto_select?.keyword);
     setValue('dateMode', c.date_auto_select?.mode);
+    setChecked('dateFallback', c.date_auto_select?.auto_fallback ?? true);
 
     // Area auto-select
     setChecked('areaEnable', c.area_auto_select?.enable);
     setValue('areaKeyword', c.area_auto_select?.keyword);
     setValue('areaExclude', c.area_auto_select?.keyword_exclude);
     setValue('areaMode', c.area_auto_select?.mode);
+    setChecked('areaFallback', c.area_auto_select?.auto_fallback ?? true);
 
     // OCR
     setChecked('ocrEnable', c.ocr?.enable);
     setChecked('ocrForceSubmit', c.ocr?.force_submit);
     setValue('ocrModelPath', c.ocr?.model_path);
     setValue('ocrImageSource', c.ocr?.image_source);
+    setChecked('ocrBeta', c.ocr?.beta);
+    setChecked('ocrUseUniversal', c.ocr?.use_universal ?? true);
 
-    // Accounts
+    // Accounts — Tixcraft 家族
     setValue('tixcraftSid', c.accounts?.tixcraft_sid);
+    setValue('indievoxSid', c.accounts?.indievox_sid);
     setValue('ticketmasterCookie', c.accounts?.ticketmaster_cookie);
+    // KKTIX
+    setValue('kktixAccount', c.accounts?.kktix_account);
+    setValue('kktixPassword', c.accounts?.kktix_password);
+    // iBon
+    setValue('ibonCookie', c.accounts?.ibon_cookie);
+    // TicketPlus
+    setValue('ticketplusAccount', c.accounts?.ticketplus_account);
+    setValue('ticketplusPassword', c.accounts?.ticketplus_password);
+    // KHAM
+    setValue('khamAccount', c.accounts?.kham_account);
+    setValue('khamPassword', c.accounts?.kham_password);
+    // NianDai
+    setValue('niandaiAccount', c.accounts?.ticket_account);
+    setValue('niandaiPassword', c.accounts?.ticket_password);
+    // UDN
+    setValue('udnAccount', c.accounts?.udn_account);
+    setValue('udnPassword', c.accounts?.udn_password);
+    // FamiTicket
+    setValue('famiAccount', c.accounts?.fami_account);
+    setValue('famiPassword', c.accounts?.fami_password);
+    // FunOne
+    setValue('funoneSessionCookie', c.accounts?.funone_session_cookie);
+    // FANSI GO
+    setValue('fansigoCookie', c.accounts?.fansigo_cookie);
+    setValue('fansigoAccount', c.accounts?.fansigo_account);
+    setValue('fansigoPassword', c.accounts?.fansigo_password);
+    // Cityline
+    setValue('citylineAccount', c.accounts?.cityline_account);
+    // URBTIX
+    setValue('urbtixAccount', c.accounts?.urbtix_account);
+    setValue('urbtixPassword', c.accounts?.urbtix_password);
+    // HKTicketing
+    setValue('hkticketingAccount', c.accounts?.hkticketing_account);
+    setValue('hkticketingPassword', c.accounts?.hkticketing_password);
+    // Facebook
+    setValue('facebookAccount', c.accounts?.facebook_account);
+    setValue('facebookPassword', c.accounts?.facebook_password);
 
     // Contact
     setValue('realName', c.contact?.real_name);
@@ -42,9 +84,18 @@ function applyConfigToUI(c) {
     setValue('email', c.contact?.email);
     setValue('creditCardPrefix', c.contact?.credit_card_prefix);
 
-    // Advanced
+    // Advanced — play_sound (now an object)
+    const ps = c.advanced?.play_sound;
+    if (typeof ps === 'object' && ps !== null) {
+        setChecked('playSoundTicket', ps.ticket ?? true);
+        setChecked('playSoundOrder', ps.order ?? true);
+        setValue('playSoundFilename', ps.filename);
+    } else {
+        // 向後相容舊版 bool 格式
+        setChecked('playSoundTicket', !!ps);
+        setChecked('playSoundOrder', !!ps);
+    }
     setChecked('headless', c.advanced?.headless);
-    setChecked('playSound', c.advanced?.play_sound);
     setChecked('verbose', c.advanced?.verbose);
     setChecked('autoSubmitTicket', c.advanced?.auto_submit_ticket ?? true);
     setValue('autoReloadInterval', c.advanced?.auto_reload_interval);
@@ -55,6 +106,28 @@ function applyConfigToUI(c) {
     setValue('discordWebhookUrl', c.advanced?.discord_webhook_url);
     setValue('telegramBotToken', c.advanced?.telegram_bot_token);
     setValue('telegramChatId', c.advanced?.telegram_chat_id);
+    // 新增進階欄位
+    setValue('autoReloadOverheatCount', c.advanced?.auto_reload_overheat_count ?? 4);
+    setValue('autoReloadOverheatCd', c.advanced?.auto_reload_overheat_cd ?? 1);
+    setValue('resetBrowserInterval', c.advanced?.reset_browser_interval ?? 0);
+    setValue('windowSize', c.advanced?.window_size ?? '1366,768');
+    setChecked('hideSomeImage', c.advanced?.hide_some_image);
+    setChecked('blockFacebookNetwork', c.advanced?.block_facebook_network);
+    setChecked('disableAdjacentSeat', c.advanced?.disable_adjacent_seat);
+    setValue('userGuessString', c.advanced?.user_guess_string);
+    setChecked('autoGuessOptions', c.advanced?.auto_guess_options ?? true);
+    setValue('discountCode', c.advanced?.discount_code);
+    setValue('idleKeyword', c.advanced?.idle_keyword);
+    setValue('resumeKeyword', c.advanced?.resume_keyword);
+
+    // KKTIX
+    setChecked('kktixAutoNextStep', c.kktix?.auto_press_next_step ?? true);
+    setChecked('kktixAutoFillTicket', c.kktix?.auto_fill_ticket_number ?? true);
+    setValue('kktixMaxDwellTime', c.kktix?.max_dwell_time ?? 90);
+
+    // Tixcraft
+    setChecked('tixcraftPassSoldOut', c.tixcraft?.pass_date_is_sold_out ?? true);
+    setChecked('tixcraftAutoReloadComingSoon', c.tixcraft?.auto_reload_coming_soon ?? true);
 }
 
 function buildConfigFromUI() {
@@ -65,23 +138,52 @@ function buildConfigFromUI() {
         date_auto_select: {
             enable: getChecked('dateEnable'),
             keyword: getValue('dateKeyword'),
-            mode: getValue('dateMode')
+            mode: getValue('dateMode'),
+            auto_fallback: getChecked('dateFallback')
         },
         area_auto_select: {
             enable: getChecked('areaEnable'),
             keyword: getValue('areaKeyword'),
             keyword_exclude: getValue('areaExclude'),
-            mode: getValue('areaMode')
+            mode: getValue('areaMode'),
+            auto_fallback: getChecked('areaFallback')
         },
         ocr: {
             enable: getChecked('ocrEnable'),
             force_submit: getChecked('ocrForceSubmit'),
             model_path: getValue('ocrModelPath'),
-            image_source: getValue('ocrImageSource')
+            image_source: getValue('ocrImageSource'),
+            beta: getChecked('ocrBeta'),
+            use_universal: getChecked('ocrUseUniversal')
         },
         accounts: {
             tixcraft_sid: getValue('tixcraftSid'),
-            ticketmaster_cookie: getValue('ticketmasterCookie')
+            indievox_sid: getValue('indievoxSid'),
+            ticketmaster_cookie: getValue('ticketmasterCookie'),
+            kktix_account: getValue('kktixAccount'),
+            kktix_password: getValue('kktixPassword'),
+            ibon_cookie: getValue('ibonCookie'),
+            ticketplus_account: getValue('ticketplusAccount'),
+            ticketplus_password: getValue('ticketplusPassword'),
+            kham_account: getValue('khamAccount'),
+            kham_password: getValue('khamPassword'),
+            ticket_account: getValue('niandaiAccount'),
+            ticket_password: getValue('niandaiPassword'),
+            udn_account: getValue('udnAccount'),
+            udn_password: getValue('udnPassword'),
+            fami_account: getValue('famiAccount'),
+            fami_password: getValue('famiPassword'),
+            funone_session_cookie: getValue('funoneSessionCookie'),
+            fansigo_cookie: getValue('fansigoCookie'),
+            fansigo_account: getValue('fansigoAccount'),
+            fansigo_password: getValue('fansigoPassword'),
+            cityline_account: getValue('citylineAccount'),
+            urbtix_account: getValue('urbtixAccount'),
+            urbtix_password: getValue('urbtixPassword'),
+            hkticketing_account: getValue('hkticketingAccount'),
+            hkticketing_password: getValue('hkticketingPassword'),
+            facebook_account: getValue('facebookAccount'),
+            facebook_password: getValue('facebookPassword')
         },
         contact: {
             real_name: getValue('realName'),
@@ -90,8 +192,12 @@ function buildConfigFromUI() {
             credit_card_prefix: getValue('creditCardPrefix')
         },
         advanced: {
+            play_sound: {
+                ticket: getChecked('playSoundTicket'),
+                order: getChecked('playSoundOrder'),
+                filename: getValue('playSoundFilename')
+            },
             headless: getChecked('headless'),
-            play_sound: getChecked('playSound'),
             verbose: getChecked('verbose'),
             auto_submit_ticket: getChecked('autoSubmitTicket'),
             auto_reload_interval: parseInt(getValue('autoReloadInterval')) || 3,
@@ -102,8 +208,27 @@ function buildConfigFromUI() {
             discord_webhook_url: getValue('discordWebhookUrl'),
             telegram_bot_token: getValue('telegramBotToken'),
             telegram_chat_id: getValue('telegramChatId'),
-            idle_keyword: '',
-            resume_keyword: ''
+            idle_keyword: getValue('idleKeyword'),
+            resume_keyword: getValue('resumeKeyword'),
+            auto_reload_overheat_count: parseInt(getValue('autoReloadOverheatCount')) || 4,
+            auto_reload_overheat_cd: parseInt(getValue('autoReloadOverheatCd')) || 1,
+            reset_browser_interval: parseInt(getValue('resetBrowserInterval')) || 0,
+            window_size: getValue('windowSize') || '1366,768',
+            hide_some_image: getChecked('hideSomeImage'),
+            block_facebook_network: getChecked('blockFacebookNetwork'),
+            disable_adjacent_seat: getChecked('disableAdjacentSeat'),
+            user_guess_string: getValue('userGuessString'),
+            auto_guess_options: getChecked('autoGuessOptions'),
+            discount_code: getValue('discountCode')
+        },
+        kktix: {
+            auto_press_next_step: getChecked('kktixAutoNextStep'),
+            auto_fill_ticket_number: getChecked('kktixAutoFillTicket'),
+            max_dwell_time: parseInt(getValue('kktixMaxDwellTime')) || 90
+        },
+        tixcraft: {
+            pass_date_is_sold_out: getChecked('tixcraftPassSoldOut'),
+            auto_reload_coming_soon: getChecked('tixcraftAutoReloadComingSoon')
         }
     };
 }

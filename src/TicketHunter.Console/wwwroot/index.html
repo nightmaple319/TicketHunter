@@ -41,10 +41,14 @@
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#ocr">驗證碼辨識</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#contact">聯絡資訊</a></li>
             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#notifications">通知設定</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#platform">平台專屬</a></li>
         </ul>
 
         <div class="tab-content p-3 border border-top-0 rounded-bottom">
+
+            <!-- ================================================================ -->
             <!-- 基本設定 -->
+            <!-- ================================================================ -->
             <div class="tab-pane active" id="basic">
                 <div class="mb-3">
                     <label class="form-label">活動網址</label>
@@ -77,14 +81,22 @@
                     <label class="form-label">日期關鍵字 <small class="text-muted">(分號=或, 空格=且)</small></label>
                     <input type="text" class="form-control" id="dateKeyword" placeholder="例如：12/25;12/26">
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">選擇模式</label>
-                    <select class="form-select" id="dateMode">
-                        <option value="from_top">從上而下</option>
-                        <option value="from_bottom">從下而上</option>
-                        <option value="center">中間優先</option>
-                        <option value="random">隨機</option>
-                    </select>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">選擇模式</label>
+                        <select class="form-select" id="dateMode">
+                            <option value="from_top">從上而下</option>
+                            <option value="from_bottom">從下而上</option>
+                            <option value="center">中間優先</option>
+                            <option value="random">隨機</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="dateFallback" checked>
+                            <label class="form-check-label">關鍵字無匹配時自動選擇第一個可用項目</label>
+                        </div>
+                    </div>
                 </div>
 
                 <h5 class="mt-4">區域自動選擇</h5>
@@ -100,36 +112,62 @@
                     <label class="form-label">排除關鍵字</label>
                     <input type="text" class="form-control" id="areaExclude" placeholder="例如：輪椅;視線不良">
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">選擇模式</label>
-                    <select class="form-select" id="areaMode">
-                        <option value="from_top">從上而下</option>
-                        <option value="from_bottom">從下而上</option>
-                        <option value="center">中間優先</option>
-                        <option value="random">隨機</option>
-                    </select>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">選擇模式</label>
+                        <select class="form-select" id="areaMode">
+                            <option value="from_top">從上而下</option>
+                            <option value="from_bottom">從下而上</option>
+                            <option value="center">中間優先</option>
+                            <option value="random">隨機</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="areaFallback" checked>
+                            <label class="form-check-label">關鍵字無匹配時自動選擇第一個可用項目</label>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- 快速連結 -->
+                <!-- 快速連結：平台快速選擇器 -->
                 <h5 class="mt-4">快速連結</h5>
-                <div class="d-flex flex-wrap gap-2">
+                <p class="text-muted small mb-2">台灣平台</p>
+                <div class="d-flex flex-wrap gap-2 mb-2">
                     <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://tixcraft.com')">Tixcraft</button>
-                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://www.ticketmaster.com')">Ticketmaster</button>
-                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://www.ticketmaster.sg')">Ticketmaster SG</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://kktix.cc')">KKTIX</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://ticket.ibon.com.tw')">iBon</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://ticketplus.com.tw')">TicketPlus</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://kham.com.tw')">KHAM</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://ticket.com.tw')">年代</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://tickets.udnfunlife.com')">UDN</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://famiticket.com.tw')">FamiTicket</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://tickets.funone.io')">FunOne</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://go.fansi.me')">FANSI GO</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="setHomepage('https://indievox.com')">Indievox</button>
+                </div>
+                <p class="text-muted small mb-2">海外平台</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="setHomepage('https://www.ticketmaster.sg')">Ticketmaster SG</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="setHomepage('https://www.ticketmaster.com')">Ticketmaster</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="setHomepage('https://www.cityline.com')">Cityline</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="setHomepage('https://ticket.urbtix.hk')">URBTIX</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="setHomepage('https://www.hkticketing.com')">HKTicketing</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="setHomepage('https://www.galaxymacau.com')">Galaxy Macau</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="setHomepage('https://www.ticketek.com.au')">Ticketek AU</button>
                 </div>
             </div>
 
+            <!-- ================================================================ -->
             <!-- 進階設定 -->
+            <!-- ================================================================ -->
             <div class="tab-pane" id="advanced">
                 <div class="row">
                     <div class="col-md-6">
+                        <h6>一般</h6>
                         <div class="form-check mb-3">
                             <input type="checkbox" class="form-check-input" id="headless">
                             <label class="form-check-label">無頭模式（隱藏瀏覽器視窗）</label>
-                        </div>
-                        <div class="form-check mb-3">
-                            <input type="checkbox" class="form-check-input" id="playSound" checked>
-                            <label class="form-check-label">播放音效提示</label>
                         </div>
                         <div class="form-check mb-3">
                             <input type="checkbox" class="form-check-input" id="verbose">
@@ -140,15 +178,69 @@
                             <label class="form-check-label">自動按下「確認張數」送出</label>
                             <div><small class="text-muted">取消勾選後，程式會在填好張數與驗證碼後暫停，等待您手動確認</small></div>
                         </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="autoGuessOptions" checked>
+                            <label class="form-check-label">自動猜測驗證碼答案</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="disableAdjacentSeat">
+                            <label class="form-check-label">允許非相鄰座位</label>
+                        </div>
+
+                        <h6 class="mt-4">音效</h6>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="playSoundTicket" checked>
+                            <label class="form-check-label">搶到票時播放音效</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="playSoundOrder" checked>
+                            <label class="form-check-label">訂單完成時播放音效</label>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">自訂音效檔路徑 <small class="text-muted">（空白=預設音效）</small></label>
+                            <input type="text" class="form-control" id="playSoundFilename" placeholder="例如：assets/sounds/custom.mp3">
+                        </div>
+
+                        <h6 class="mt-4">效能優化</h6>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="hideSomeImage">
+                            <label class="form-check-label">阻擋字型/圖示/圖片以加速載入</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="blockFacebookNetwork">
+                            <label class="form-check-label">阻擋 Facebook 追蹤腳本</label>
+                        </div>
                     </div>
                     <div class="col-md-6">
+                        <h6>自動重新整理</h6>
                         <div class="mb-3">
                             <label class="form-label">自動重新整理間隔（秒）</label>
                             <input type="number" class="form-control" id="autoReloadInterval" value="3" min="1" max="60">
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label">過熱保護次數</label>
+                                <input type="number" class="form-control" id="autoReloadOverheatCount" value="4" min="1" max="20">
+                                <small class="text-muted">連續刷新幾次後冷卻</small>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">冷卻秒數</label>
+                                <input type="number" class="form-control" id="autoReloadOverheatCd" value="1" min="1" max="30">
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">最大重試次數</label>
                             <input type="number" class="form-control" id="maxRetry" value="3" min="1" max="10">
+                        </div>
+
+                        <h6 class="mt-4">瀏覽器</h6>
+                        <div class="mb-3">
+                            <label class="form-label">視窗大小（寬,高）</label>
+                            <input type="text" class="form-control" id="windowSize" value="1366,768" placeholder="1366,768">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">瀏覽器自動重啟間隔（秒）<small class="text-muted">0=不重啟</small></label>
+                            <input type="number" class="form-control" id="resetBrowserInterval" value="0" min="0">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">代理伺服器</label>
@@ -158,29 +250,193 @@
                             <label class="form-label">Web 介面連接埠</label>
                             <input type="number" class="form-control" id="webPort" value="16888" min="1024" max="65535">
                         </div>
+
+                        <h6 class="mt-4">排程與控制</h6>
                         <div class="mb-3">
                             <label class="form-label">排程啟動時間（HH:MM:SS）</label>
                             <input type="text" class="form-control" id="scheduleStart" placeholder="例如：12:00:00">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">暫停關鍵字 <small class="text-muted">頁面出現此文字時自動暫停</small></label>
+                            <input type="text" class="form-control" id="idleKeyword">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">恢復關鍵字 <small class="text-muted">頁面出現此文字時自動恢復</small></label>
+                            <input type="text" class="form-control" id="resumeKeyword">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">預設驗證碼答案 <small class="text-muted">（分號分隔）</small></label>
+                            <input type="text" class="form-control" id="userGuessString" placeholder="例如：答案1;答案2">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">優惠碼/會員碼</label>
+                            <input type="text" class="form-control" id="discountCode" placeholder="KKTIX/TicketPlus 適用">
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- ================================================================ -->
             <!-- 帳號設定 -->
+            <!-- ================================================================ -->
             <div class="tab-pane" id="accounts">
-                <div class="mb-3">
-                    <label class="form-label">Tixcraft 工作階段 ID（TIXUISID）</label>
-                    <input type="text" class="form-control" id="tixcraftSid" placeholder="貼上 TIXUISID Cookie 值">
-                    <small class="text-muted">從瀏覽器開發者工具 > Application > Cookies > tixcraft.com > TIXUISID 取得</small>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Ticketmaster Cookie</label>
-                    <textarea class="form-control" id="ticketmasterCookie" rows="3" placeholder="貼上完整 Cookie 字串"></textarea>
-                    <small class="text-muted">從瀏覽器開發者工具 > Application > Cookies > ticketmaster 網域取得</small>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Tixcraft 家族</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Tixcraft TIXUISID</label>
+                            <input type="text" class="form-control" id="tixcraftSid" placeholder="貼上 TIXUISID Cookie 值">
+                            <small class="text-muted">DevTools > Application > Cookies > tixcraft.com > TIXUISID</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Indievox SID</label>
+                            <input type="text" class="form-control" id="indievoxSid">
+                        </div>
+
+                        <h6 class="mt-3">Ticketmaster</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Cookie 字串</label>
+                            <textarea class="form-control" id="ticketmasterCookie" rows="2" placeholder="貼上完整 Cookie 字串"></textarea>
+                        </div>
+
+                        <h6 class="mt-3">KKTIX</h6>
+                        <div class="mb-3">
+                            <label class="form-label">帳號（Email）</label>
+                            <input type="text" class="form-control" id="kktixAccount">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">密碼</label>
+                            <input type="password" class="form-control" id="kktixPassword">
+                        </div>
+
+                        <h6 class="mt-3">iBon</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Cookie</label>
+                            <input type="text" class="form-control" id="ibonCookie">
+                        </div>
+
+                        <h6 class="mt-3">TicketPlus（遠大）</h6>
+                        <div class="mb-3">
+                            <label class="form-label">帳號</label>
+                            <input type="text" class="form-control" id="ticketplusAccount">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">密碼</label>
+                            <input type="password" class="form-control" id="ticketplusPassword">
+                        </div>
+
+                        <h6 class="mt-3">KHAM（寬宏）</h6>
+                        <div class="mb-3">
+                            <label class="form-label">帳號</label>
+                            <input type="text" class="form-control" id="khamAccount">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">密碼</label>
+                            <input type="password" class="form-control" id="khamPassword">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>年代（ticket.com.tw）</h6>
+                        <div class="mb-3">
+                            <label class="form-label">帳號</label>
+                            <input type="text" class="form-control" id="niandaiAccount">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">密碼</label>
+                            <input type="password" class="form-control" id="niandaiPassword">
+                        </div>
+
+                        <h6 class="mt-3">UDN</h6>
+                        <div class="mb-3">
+                            <label class="form-label">帳號</label>
+                            <input type="text" class="form-control" id="udnAccount">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">密碼</label>
+                            <input type="password" class="form-control" id="udnPassword">
+                        </div>
+
+                        <h6 class="mt-3">FamiTicket</h6>
+                        <div class="mb-3">
+                            <label class="form-label">帳號</label>
+                            <input type="text" class="form-control" id="famiAccount">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">密碼</label>
+                            <input type="password" class="form-control" id="famiPassword">
+                        </div>
+
+                        <h6 class="mt-3">FunOne</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Session Cookie</label>
+                            <input type="text" class="form-control" id="funoneSessionCookie">
+                        </div>
+
+                        <h6 class="mt-3">FANSI GO</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Cookie</label>
+                            <input type="text" class="form-control" id="fansigoCookie">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label">帳號</label>
+                                <input type="text" class="form-control" id="fansigoAccount">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">密碼</label>
+                                <input type="password" class="form-control" id="fansigoPassword">
+                            </div>
+                        </div>
+
+                        <h6 class="mt-3">Cityline（香港）</h6>
+                        <div class="mb-3">
+                            <label class="form-label">帳號（Email）</label>
+                            <input type="text" class="form-control" id="citylineAccount">
+                            <small class="text-muted">Cityline 使用半自動 Email 驗證登入</small>
+                        </div>
+
+                        <h6 class="mt-3">URBTIX（香港）</h6>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label">帳號</label>
+                                <input type="text" class="form-control" id="urbtixAccount">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">密碼</label>
+                                <input type="password" class="form-control" id="urbtixPassword">
+                            </div>
+                        </div>
+
+                        <h6 class="mt-3">HKTicketing（香港）</h6>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label">帳號</label>
+                                <input type="text" class="form-control" id="hkticketingAccount">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">密碼</label>
+                                <input type="password" class="form-control" id="hkticketingPassword">
+                            </div>
+                        </div>
+
+                        <h6 class="mt-3">Facebook（跨平台社群登入）</h6>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label">帳號</label>
+                                <input type="text" class="form-control" id="facebookAccount">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">密碼</label>
+                                <input type="password" class="form-control" id="facebookPassword">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <!-- ================================================================ -->
             <!-- 驗證碼辨識 -->
+            <!-- ================================================================ -->
             <div class="tab-pane" id="ocr">
                 <div class="form-check mb-3">
                     <input type="checkbox" class="form-check-input" id="ocrEnable" checked>
@@ -189,6 +445,14 @@
                 <div class="form-check mb-3">
                     <input type="checkbox" class="form-check-input" id="ocrForceSubmit">
                     <label class="form-check-label">強制送出（即使 OCR 辨識失敗仍送出）</label>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="ocrUseUniversal" checked>
+                    <label class="form-check-label">使用自訓練 Universal 模型（準確率 99%+）</label>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="ocrBeta">
+                    <label class="form-check-label">Beta 字元集</label>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">模型路徑</label>
@@ -219,7 +483,9 @@
                 </div>
             </div>
 
+            <!-- ================================================================ -->
             <!-- 聯絡資訊 -->
+            <!-- ================================================================ -->
             <div class="tab-pane" id="contact">
                 <div class="mb-3">
                     <label class="form-label">真實姓名</label>
@@ -239,7 +505,9 @@
                 </div>
             </div>
 
+            <!-- ================================================================ -->
             <!-- 通知設定 -->
+            <!-- ================================================================ -->
             <div class="tab-pane" id="notifications">
                 <h5>Discord</h5>
                 <div class="mb-3">
@@ -251,14 +519,49 @@
                 <h5 class="mt-3">Telegram</h5>
                 <div class="mb-3">
                     <label class="form-label">Bot Token</label>
-                    <input type="text" class="form-control" id="telegramBotToken">
+                    <input type="password" class="form-control" id="telegramBotToken">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Chat ID</label>
+                    <label class="form-label">Chat ID <small class="text-muted">（多個以逗號分隔）</small></label>
                     <input type="text" class="form-control" id="telegramChatId">
                 </div>
                 <button class="btn btn-outline-primary btn-sm mb-3" onclick="testTelegram()">測試 Telegram</button>
             </div>
+
+            <!-- ================================================================ -->
+            <!-- 平台專屬設定 -->
+            <!-- ================================================================ -->
+            <div class="tab-pane" id="platform">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Tixcraft</h5>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="tixcraftPassSoldOut" checked>
+                            <label class="form-check-label">自動跳過已售完場次</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="tixcraftAutoReloadComingSoon" checked>
+                            <label class="form-check-label">自動重新整理「即將開賣」頁面</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>KKTIX</h5>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="kktixAutoNextStep" checked>
+                            <label class="form-check-label">自動按下「下一步」按鈕</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input" id="kktixAutoFillTicket" checked>
+                            <label class="form-check-label">自動填入票數</label>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">最大停留時間（秒）<small class="text-muted">超時自動送出</small></label>
+                            <input type="number" class="form-control" id="kktixMaxDwellTime" value="90" min="10" max="300">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- 儲存/載入按鈕 -->
