@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace TicketHunter.Core.Models;
@@ -220,18 +221,64 @@ public class ContactConfig
 // Sound (分離 ticket / order 音效)
 // ============================================================
 
+/// <summary>
+/// 向後相容轉換器：接受舊格式 bool（true/false）或新格式 object。
+/// bool true → Ticket=true, Order=true；bool false → Ticket=false, Order=false。
+/// </summary>
+public class PlaySoundConfigConverter : JsonConverter<PlaySoundConfig>
+{
+    public override PlaySoundConfig Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        if (reader.TokenType == JsonTokenType.True || reader.TokenType == JsonTokenType.False)
+        {
+            var enabled = reader.GetBoolean();
+            return new PlaySoundConfig { Ticket = enabled, Order = enabled };
+        }
+
+        if (reader.TokenType == JsonTokenType.StartObject)
+        {
+            return JsonSerializer.Deserialize<PlaySoundConfigDto>(ref reader, options)?.ToConfig()
+                   ?? new PlaySoundConfig();
+        }
+
+        throw new JsonException($"Unexpected token for play_sound: {reader.TokenType}");
+    }
+
+    public override void Write(Utf8JsonWriter writer, PlaySoundConfig value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        writer.WriteBoolean("ticket", value.Ticket);
+        writer.WriteBoolean("order", value.Order);
+        writer.WriteString("filename", value.Filename);
+        writer.WriteEndObject();
+    }
+
+    /// <summary>Internal DTO to avoid infinite recursion during deserialization.</summary>
+    private class PlaySoundConfigDto
+    {
+        [JsonPropertyName("ticket")]
+        public bool Ticket { get; set; } = true;
+
+        [JsonPropertyName("order")]
+        public bool Order { get; set; } = true;
+
+        [JsonPropertyName("filename")]
+        public string Filename { get; set; } = "";
+
+        public PlaySoundConfig ToConfig() => new() { Ticket = Ticket, Order = Order, Filename = Filename };
+    }
+}
+
+[JsonConverter(typeof(PlaySoundConfigConverter))]
 public class PlaySoundConfig
 {
     /// <summary>搶到票時播放音效</summary>
-    [JsonPropertyName("ticket")]
     public bool Ticket { get; set; } = true;
 
     /// <summary>訂單完成時播放音效</summary>
-    [JsonPropertyName("order")]
     public bool Order { get; set; } = true;
 
     /// <summary>自訂音效檔路徑（空字串 = 使用預設）</summary>
-    [JsonPropertyName("filename")]
     public string Filename { get; set; } = "";
 }
 
